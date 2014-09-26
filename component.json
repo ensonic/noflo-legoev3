@@ -1,0 +1,23 @@
+{
+  "name": "noflo-legoev3",
+  "description": "NoFlo components for a LEGO Mindstorms EV3",
+  "author": "Stefan Sauer <ensonic@google.com>",
+  "repo": "ensonic/noflo-legoev3",
+  "version": "0.1.0",
+  "keywords": [],
+  "dependencies": {
+    "noflo/noflo": "*"
+  },
+  "scripts": [
+    "index.js",
+    "components/Beep.coffee",
+    "components/Buttons.coffee",
+    "components/ColorSensor.coffee",
+    "components/LED.coffee",
+    "components/TouchSensor.coffee",
+    "components/Map.coffee"
+  ],
+  "json": [
+    "component.json"
+  ]
+}

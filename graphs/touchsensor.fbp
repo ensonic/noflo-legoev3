@@ -1,0 +1,10 @@
+# @runtime noflo-nodejs
+# Poll the touchsensor component at a regular interval
+
+EXPORT=RunInterval.INTERVAL:INTERVAL
+EXPORT=RunInterval.START:START
+EXPORT=RunInterval.STOP:STOP
+EXPORT=TouchSensor.PORT:PORT
+EXPORT=TouchSensor.VALUE:VALUE
+
+RunIntervall(core/RunInterval) OUT -> KICK TouchSensor(legoev3/TouchSensor)

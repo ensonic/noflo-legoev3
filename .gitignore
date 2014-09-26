@@ -1,0 +1,6 @@
+browser/
+node_modules/
+npm-debug.log
+spec/result.xml
+*~
+
