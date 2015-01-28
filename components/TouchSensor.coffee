@@ -5,18 +5,20 @@ noflo = require 'noflo'
 # https://github.com/ev3dev/ev3dev/wiki/Using-Sensors
 # https://github.com/ev3dev/ev3dev/wiki/Using-the-Mindstorms-Sensor-Device-Class
 
+LOG_PREFIX = 'legoev3/TouchSensor:'
+
 class TouchSensor extends noflo.Component
   description: 'Detect touch events.'
   icon: 'power-off'
-  
+
   constructor: ->
-    #console.log "legoev3/#{@constructor.name}: creating new component"
+    #console.log "#{LOG_PREFIX} creating new component"
 
     @last_value = null
     @in_read_file = false
     @base = null
     @updateBase 1
-    
+
     @inPorts = new noflo.InPorts
       kick:
         datatype: 'bang'
@@ -40,12 +42,12 @@ class TouchSensor extends noflo.Component
         @last_value = new_value
         @outPorts.value.send (new_value is 1)
       @in_read_file = false
- 
+
     @inPorts.port.on 'data', (data) =>
       @updateBase data
 
-    #console.log "legoev3/#{@constructor.name}: created new component"
-  
+    #console.log "#{LOG_PREFIX} created new component"
+
   updateBase: (port) ->
     try
       files = fs.readdirSync '/sys/class/msensor/'
@@ -55,10 +57,10 @@ class TouchSensor extends noflo.Component
         port_name = fs.readFileSync file + '/port_name'
         if port_name is wanted
           @base = file + '/value0'
-          console.log "legoev3/#{@constructor.name}: new base: #{@base}"
+          console.log "#{LOG_PREFIX} new base: #{@base}"
           break
     catch err
-      console.log "legoev3/#{@constructor.name}: readdir failed: #{err}"
+      console.log "#{LOG_PREFIX} readdir failed: #{err}"
 
 exports.getComponent = -> new TouchSensor()
 

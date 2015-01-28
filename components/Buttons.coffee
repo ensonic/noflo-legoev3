@@ -4,16 +4,18 @@ noflo = require 'noflo'
 # @runtime noflo-nodejs
 # https://www.kernel.org/doc/Documentation/input/input.txt
 
+LOG_PREFIX = 'legoev3/Buttons:'
+
 class Buttons extends noflo.Component
   description: 'Detect button events.'
   icon: 'power-off'
 
   constructor: ->
-    #console.log "legoev3/#{@constructor.name}: creating new component"
+    #console.log "#{LOG_PREFIX} creating new component"
 
     @fd = null
     @base = '/dev/input/by-path/platform-gpio-keys.0-event'
-    
+
     @buttons =
       105:
         name: 'left'
@@ -33,7 +35,7 @@ class Buttons extends noflo.Component
       1:
         name: 'back'
         pressed: undefined
-    
+
     @inPorts = new noflo.InPorts
       kick:
         datatype: 'bang'
@@ -56,9 +58,9 @@ class Buttons extends noflo.Component
         buf = new Buffer(16)
         fs.read @fd, buf, 0, buf.length, null, @readButtons
       catch err
-        console.log "legoev3/#{@constructor.name}: open(#{@base}) failed: #{err}"
+        console.log "#{LOG_PREFIX} open(#{@base}) failed: #{err}"
 
-    #console.log "legoev3/#{@constructor.name}: created new component"
+    #console.log "#{LOG_PREFIX} created new component"
 
   decodeButton: (buf) =>
     # EV_KEY=0x1 or EV_SYN=0x0
@@ -75,9 +77,9 @@ class Buttons extends noflo.Component
 
   readButtons: (err, bytesRead, buf) =>
     if err
-      console.log "legoev3/#{@constructor.name}: error #{err}"
+      console.log "#{LOG_PREFIX} error #{err}"
     else if bytesRead < 16
-      console.log "legoev3/#{@constructor.name}: short read: #{bytesRead}"
+      console.log "#{LOG_PREFIX} short read: #{bytesRead}"
     else
       @decodeButton buf
     if @fd
