@@ -2,10 +2,11 @@ fs = require 'fs'
 noflo = require 'noflo'
 
 # @runtime noflo-nodejs
-# https://github.com/ev3dev/ev3dev/wiki/Using-Sensors
+# http://www.ev3dev.org/docs/sensors/lego-ev3-touch-sensor/
 # https://github.com/ev3dev/ev3dev/wiki/Using-the-Mindstorms-Sensor-Device-Class
 
 LOG_PREFIX = 'legoev3/TouchSensor:'
+ENC = { encoding: 'utf8' }
 
 class TouchSensor extends noflo.Component
   description: 'Detect touch events.'
@@ -36,7 +37,7 @@ class TouchSensor extends noflo.Component
     @inPorts.kick.on 'data', =>
       return if @in_read_file or @base is null
       @in_read_file = true
-      new_value = parseInt (fs.readFileSync @base, { ensonic: 'utf8' })
+      new_value = parseInt (fs.readFileSync @base + '/value0', ENC)
       # Only send messages on change
       if new_value isnt @last_value
         @last_value = new_value
@@ -54,10 +55,14 @@ class TouchSensor extends noflo.Component
       files = (file for file in files when file.slice(0, 6) isnt 'sensor')
       wanted = 'in' + port
       for file in files
-        port_name = fs.readFileSync file + '/port_name'
+        port_name = fs.readFileSync file + '/port_name', ENC
         if port_name is wanted
-          @base = file + '/value0'
-          console.log "#{LOG_PREFIX} new base: #{@base}"
+          type_id = fs.readFileSync file + '/type_id', ENC
+          if type_id is "16"
+            @base = file
+            console.log "#{LOG_PREFIX} new base: #{@base}"
+          else
+            console.log "#{LOG_PREFIX} wrong sensor type: #{type_id} != 16"
           break
     catch err
       console.log "#{LOG_PREFIX} readdir failed: #{err}"
