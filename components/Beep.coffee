@@ -27,6 +27,9 @@ class Beep extends noflo.Component
 
     @inPorts.volume.on 'data', (data) =>
       @volume = data
-   
+
+  shutdown: ->
+    fs.writeFile @base + 'tone', 0
+
 exports.getComponent = -> new Beep
 
