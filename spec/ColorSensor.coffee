@@ -15,5 +15,11 @@ describe 'ColorSensor component', ->
 
   describe 'when instantiated', ->
     it 'should have an input port', ->
+      chai.expect(c.inPorts.kick).to.be.an 'object'
+    it 'should have an input port', ->
+      chai.expect(c.inPorts.port).to.be.an 'object'
+    it 'should have an input port', ->
       chai.expect(c.inPorts.mode).to.be.an 'object'
+    it 'should have an output port', ->
+      chai.expect(c.outPorts.value).to.be.an 'object'
 
