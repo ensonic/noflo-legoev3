@@ -40,6 +40,7 @@ class TouchSensor extends noflo.Component
       new_value = parseInt (fs.readFileSync @base + '/value0', ENC)
       # Only send messages on change
       if new_value isnt @last_value
+        #console.log "#{LOG_PREFIX} read: #{new_value}"
         @last_value = new_value
         @outPorts.value.send (new_value is 1)
       @in_read_file = false
@@ -50,17 +51,22 @@ class TouchSensor extends noflo.Component
     #console.log "#{LOG_PREFIX} created new component"
 
   updateBase: (port) ->
+    dir = '/sys/class/msensor/'
     try
-      files = fs.readdirSync '/sys/class/msensor/'
-      files = (file for file in files when file.slice(0, 6) isnt 'sensor')
+      files = fs.readdirSync dir
+      files = (file for file in files when file.slice(0, 6) is 'sensor')
       wanted = 'in' + port
+      console.log "#{LOG_PREFIX} searching for #{wanted} in #{files.length} entries"
       for file in files
-        port_name = fs.readFileSync file + '/port_name', ENC
-        if port_name is wanted
-          type_id = fs.readFileSync file + '/type_id', ENC
-          if type_id is "16"
-            @base = file
+        path = dir + file
+        console.log "#{LOG_PREFIX} trying #{path}"
+        port_name = fs.readFileSync path + '/port_name', ENC
+        if port_name.trim() is wanted
+          type_id = fs.readFileSync path + '/type_id', ENC
+          if type_id.trim() is "16"
+            @base = path
             console.log "#{LOG_PREFIX} new base: #{@base}"
+            @outPorts.value.connect()
           else
             console.log "#{LOG_PREFIX} wrong sensor type: #{type_id} != 16"
           break
