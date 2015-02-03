@@ -47,6 +47,7 @@
       "Buttons": "components/Buttons.coffee",
       "ColorSensor": "components/ColorSensor.coffee",
       "LED": "components/LED.coffee",
+      "Motor": "components/Motor.coffee",
       "TouchSensor": "components/TouchSensor.coffee"
     },
     "graphs": {

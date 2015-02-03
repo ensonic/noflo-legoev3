@@ -14,8 +14,8 @@
     "components/Buttons.coffee",
     "components/ColorSensor.coffee",
     "components/LED.coffee",
-    "components/TouchSensor.coffee",
-    "components/Map.coffee"
+    "components/Motor.coffee",
+    "components/TouchSensor.coffee"
   ],
   "json": [
     "component.json"
