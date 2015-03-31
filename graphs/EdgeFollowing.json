@@ -1,0 +1,451 @@
+{
+    "properties": {
+        "name": "EdgeFollowing",
+        "project": "ev3-demo",
+        "id": "ev3-demo/EdgeFollowing",
+        "environment": {
+            "type": "noflo-nodejs"
+        },
+        "changed": true,
+        "icon": ""
+    },
+    "inports": {},
+    "outports": {},
+    "groups": [],
+    "processes": {
+        "core/Repeat_ubg4i": {
+            "component": "core/Repeat",
+            "metadata": {
+                "label": "core/Repeat",
+                "x": 396,
+                "y": -36,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "core/RunInterval_bbf7s": {
+            "component": "core/RunInterval",
+            "metadata": {
+                "label": "core/RunInterval",
+                "x": 540,
+                "y": 108,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "legoev3/ColorSensor_65eut": {
+            "component": "legoev3/ColorSensor",
+            "metadata": {
+                "label": "legoev3/ColorSensor",
+                "x": 720,
+                "y": 108,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "legoev3/Motor right": {
+            "component": "legoev3/Motor",
+            "metadata": {
+                "label": "legoev3/Motor right",
+                "x": 1188,
+                "y": 252,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "legoev3/Motor left": {
+            "component": "legoev3/Motor",
+            "metadata": {
+                "label": "legoev3/Motor left",
+                "x": 1188,
+                "y": -36,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "math/SendNumber_xd0rj": {
+            "component": "math/SendNumber",
+            "metadata": {
+                "label": "math/SendNumber",
+                "x": 1044,
+                "y": -108,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "math/SendNumber_s5u8o": {
+            "component": "math/SendNumber",
+            "metadata": {
+                "label": "math/SendNumber",
+                "x": 1044,
+                "y": 36,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "math/SendNumber_temp9": {
+            "component": "math/SendNumber",
+            "metadata": {
+                "label": "math/SendNumber",
+                "x": 1044,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "math/SendNumber_oh75q": {
+            "component": "math/SendNumber",
+            "metadata": {
+                "label": "math/SendNumber",
+                "x": 1044,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "forward": {
+            "component": "math/SendNumber",
+            "metadata": {
+                "label": "forward",
+                "x": 540,
+                "y": -180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "backwards": {
+            "component": "math/SendNumber",
+            "metadata": {
+                "label": "backwards",
+                "x": 828,
+                "y": -72,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "math/Compare": {
+            "component": "math/Compare",
+            "metadata": {
+                "label": "math/Compare",
+                "x": 864,
+                "y": 72,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "math/Compare_98rof": {
+            "component": "math/Compare",
+            "metadata": {
+                "label": "math/Compare",
+                "x": 864,
+                "y": 216,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "connections": [
+        {
+            "src": {
+                "process": "core/Repeat_ubg4i",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "core/RunInterval_bbf7s",
+                "port": "start"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "core/RunInterval_bbf7s",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "legoev3/ColorSensor_65eut",
+                "port": "kick"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/SendNumber_xd0rj",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "legoev3/Motor left",
+                "port": "speed"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/SendNumber_s5u8o",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "legoev3/Motor left",
+                "port": "speed"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/SendNumber_temp9",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "legoev3/Motor right",
+                "port": "speed"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/SendNumber_oh75q",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "legoev3/Motor right",
+                "port": "speed"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "core/Repeat_ubg4i",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "forward",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "forward",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "math/SendNumber_xd0rj",
+                "port": "number"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "forward",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "math/SendNumber_oh75q",
+                "port": "number"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "core/Repeat_ubg4i",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "backwards",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "backwards",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "math/SendNumber_s5u8o",
+                "port": "number"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "backwards",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "math/SendNumber_temp9",
+                "port": "number"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "math/Compare",
+                "port": "pass"
+            },
+            "tgt": {
+                "process": "math/SendNumber_xd0rj",
+                "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/Compare",
+                "port": "pass"
+            },
+            "tgt": {
+                "process": "math/SendNumber_temp9",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "legoev3/ColorSensor_65eut",
+                "port": "value"
+            },
+            "tgt": {
+                "process": "math/Compare",
+                "port": "value"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/Compare_98rof",
+                "port": "pass"
+            },
+            "tgt": {
+                "process": "math/SendNumber_s5u8o",
+                "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "math/Compare_98rof",
+                "port": "pass"
+            },
+            "tgt": {
+                "process": "math/SendNumber_oh75q",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "legoev3/ColorSensor_65eut",
+                "port": "value"
+            },
+            "tgt": {
+                "process": "math/Compare_98rof",
+                "port": "value"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "data": "bang",
+            "tgt": {
+                "process": "core/Repeat_ubg4i",
+                "port": "in"
+            }
+        },
+        {
+            "data": 250,
+            "tgt": {
+                "process": "core/RunInterval_bbf7s",
+                "port": "interval"
+            }
+        },
+        {
+            "data": 2,
+            "tgt": {
+                "process": "legoev3/ColorSensor_65eut",
+                "port": "port"
+            }
+        },
+        {
+            "data": "reflective",
+            "tgt": {
+                "process": "legoev3/ColorSensor_65eut",
+                "port": "mode"
+            }
+        },
+        {
+            "data": "A",
+            "tgt": {
+                "process": "legoev3/Motor left",
+                "port": "port"
+            }
+        },
+        {
+            "data": "D",
+            "tgt": {
+                "process": "legoev3/Motor right",
+                "port": "port"
+            }
+        },
+        {
+            "data": 30,
+            "tgt": {
+                "process": "math/Compare",
+                "port": "comparison"
+            }
+        },
+        {
+            "data": ">",
+            "tgt": {
+                "process": "math/Compare",
+                "port": "operator"
+            }
+        },
+        {
+            "data": 30,
+            "tgt": {
+                "process": "math/Compare_98rof",
+                "port": "comparison"
+            }
+        },
+        {
+            "data": "<",
+            "tgt": {
+                "process": "math/Compare_98rof",
+                "port": "operator"
+            }
+        },
+        {
+            "data": "25",
+            "tgt": {
+                "process": "forward",
+                "port": "number"
+            }
+        },
+        {
+            "data": "-15",
+            "tgt": {
+                "process": "backwards",
+                "port": "number"
+            }
+        }
+    ]
+}

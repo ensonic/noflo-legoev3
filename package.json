@@ -48,10 +48,12 @@
       "ColorSensor": "components/ColorSensor.coffee",
       "LED": "components/LED.coffee",
       "Motor": "components/Motor.coffee",
-      "TouchSensor": "components/TouchSensor.coffee"
+      "TouchSensor": "components/TouchSensor.coffee",
+      "TouchSensor2": "components/TouchSensor2.coffee"
     },
     "graphs": {
-      "touchsensor": "graphs/touchsensor.fbp"
+      "touchsensor": "graphs/touchsensor.fbp",
+      "EdgeFollowing": "graphs/EdgeFollowing.json"
     }
   }
 }
